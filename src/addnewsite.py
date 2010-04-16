@@ -1,12 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-Примерение:
-
-$ addnewsite site.name 
-"""
-
 ################ Общие модули ################
 
 import sys
@@ -33,10 +27,8 @@ def main():
             username = sys.argv[1]
             sitename = 'www.%s' % username
             
-            #userpw = vctl.createnewuser(username)
-            userpw = {'username': username, 'uid': 777, 'gid': 888, 'homedir': '/test/my.site'}
+            userpw = vctl.createnewuser(username)
             vctl.createftpuser(userpw, userpw['homedir'])
-            exit(0)
             
             siteconfig = vctl.addnewsite(username, sitename)
             
@@ -44,7 +36,7 @@ def main():
             siteconfig['maxclients'] = 5
             
             a_conf = vctl.gen_apache_config(siteconfig)
-            a_file = os.path.join(vctl.APACHEVHOSTS, "300_%s_vhost.conf" % username)
+            a_file = os.path.join(vctl.APACHEVHOSTS, "%i_%s_vhost.conf" % (userpw['uid'], username))
             
             with open(a_file, 'a') as f:
                 f.write(a_conf)

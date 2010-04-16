@@ -39,8 +39,7 @@ def createnewuser(username):
     os.mkdir( os.path.join(userhome, 'sites') )
     TESTING or os.chown(os.path.join(userhome, 'sites'), pw[2], pw[3])
     
-    #return {'username': username, 'uid': pw[2], 'gid': pw[3], 'homedir': userhome}
-    return {'username': username, 'uid': 777, 'gid': 777, 'homedir': userhome}
+    return {'username': username, 'uid': pw[2], 'gid': pw[3], 'homedir': userhome}
 
 def createftpuser(userpw, dir):
     """ Создает аккаунт для ftp
