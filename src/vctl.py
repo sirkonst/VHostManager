@@ -34,7 +34,7 @@ def createnewuser(username):
     
     TESTING or sh("adduser -m -U %s" % username)
     pw = TESTING or pwd.getpwnam(username)
-    TESTING or os.chmod(userhome, 750)
+    #TESTING or os.chmod(userhome, 750)
     TESTING or sh("setfacl -m u:nginx:x %s" % userhome)
     os.mkdir( os.path.join(userhome, 'sites') )
     TESTING or os.chown(os.path.join(userhome, 'sites'), pw[2], pw[3])
