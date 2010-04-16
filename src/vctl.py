@@ -11,10 +11,12 @@ from shell import ShellError, shell as sh
 
 ################ Переменные ################
 
-USERDIRBASE = '/home'
-APACHETMPL = ''
+USERDIRBASE = '/home/'
+APACHETMPL = '/etc/apache2/vhosts.d/site-template'
 APACHEVHOSTS = '/etc/apache2/vhosts.d/'
 NGINXDOCROOT = '/etc/nginx/docroot.map'
+FTPPASSDB = '/etc/proftpd/accounts/ftp.passwd'
+
 
 TESTING = False
 
@@ -23,7 +25,9 @@ TESTING = False
 class Error(Exception): pass
 
 def createnewuser(username):
-    """ Создание базового пользователя для сайта """
+    """ Создание базового пользователя для сайта.
+    Возвращает словать {username, uid, gid, homedir}
+    """
     userhome = os.path.join(USERDIRBASE, username)
     if os.path.exists(userhome):
         raise Error, "Папка пользователя '%s' уже существует" %  userhome
@@ -34,6 +38,20 @@ def createnewuser(username):
     TESTING or sh("setfacl -m -u:nginx:x %s" % userhome)
     os.mkdir( os.path.join(userhome, 'sites') )
     TESTING or os.chown(os.path.join(userhome, 'sites'), pw[2], pw[3])
+    
+    #return {'username': username, 'uid': pw[2], 'gid': pw[3], 'homedir': userhome}
+    return {'username': username, 'uid': 777, 'gid': 777, 'homedir': userhome}
+
+def createftpuser(userpw, dir):
+    """ Создает аккаунт для ftp
+    userpw - словарь {username, uid, gid}
+    """
+    userpw['dir'] = dir
+    
+    with open(FTPPASSDB, 'a') as f:
+        ftp_conf = '%(username)s:!:%(uid)i:%(gid)i::%(dir)s:/bin/false\n' % userpw
+        f.write(ftp_conf)
+    
 
 def addnewsite(username, sitename):
     """ Создание папки сайта. Возвращает в словаре параменты сайта: {docroot, sitename, username} """

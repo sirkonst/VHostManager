@@ -19,20 +19,25 @@ import vctl
 # Testing
 vctl.USERDIRBASE = '../test/home'
 vctl.TESTING = True
-vctl.APACHETMPL = '../test/tpl/apache_vhost.tpl'
+vctl.APACHETMPL = '../templates/apache_vhost.tpl'
 vctl.APACHEVHOSTS = '../test/apache_vhost'
 vctl.NGINXDOCROOT = '../test/docroot.map'
+vctl.FTPPASSDB = '../test/ftp.passwd'
 
 ################ Логика ################
 
 def main():
     # Проверка имени сайта
-    if sys.argv[1] and len(sys.argv[1].split('.')) == 2:
+    if len(sys.argv) == 2 and len(sys.argv[1].split('.')) == 2:
         try:
             username = sys.argv[1]
             sitename = 'www.%s' % username
             
-            #vctl.createnewuser(username)
+            #userpw = vctl.createnewuser(username)
+            userpw = {'username': username, 'uid': 777, 'gid': 888, 'homedir': '/test/my.site'}
+            vctl.createftpuser(userpw, userpw['homedir'])
+            exit(0)
+            
             siteconfig = vctl.addnewsite(username, sitename)
             
             siteconfig['site_aliases'] = '%s *.%s' % (username, username)
