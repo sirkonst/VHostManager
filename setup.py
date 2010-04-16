@@ -13,6 +13,7 @@ setup(name='VHostManager',
       package_dir = {'VHostManager': 'src'},
       #package_data = {'VHostManager': ['templates/apache_vhost.tpl']},
       entry_points = {
-                      'console_scripts': ['vctl-newusersite = VHostManager.addnewsite:main']
+                      'console_scripts': ['vctl-newusersite = VHostManager.addnewsite:main',
+                                          'vctl-addsite = VHostManager.addsite:main']
                       },        
      )

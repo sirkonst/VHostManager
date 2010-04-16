@@ -41,6 +41,12 @@ def createnewuser(username):
 
     return {'username': username, 'uid': pw[2], 'gid': pw[3], 'homedir': userhome}
 
+def get_userpw(username):
+    """ Создает словать {username, uid, gid} для системного пользователя """
+    pw = pwd.getpwnam(username)
+    
+    return {'username': username, 'uid': pw[2], 'gid': pw[3]}
+
 def createftpuser(userpw, dir):
     """ Создает аккаунт для ftp
     userpw - словарь {username, uid, gid}

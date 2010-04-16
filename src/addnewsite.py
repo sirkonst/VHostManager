@@ -1,16 +1,28 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+"""
+Создание пользователя и сайта по-умолчанию.
+
+Первый параметр - имя пользователя.
+
+Команда:
+$ addnewsite site.my
+
+cоздаст пользователя site.my, фтп доступ, папку сайта www.site.my и конфиг для apache и nginx
+"""
+
 ################ Общие модули ################
 
 import sys
 import os
+import shutil
 
 import vctl
 
 ################ Переменные ################
 
-# Testing
+## Testing
 #vctl.USERDIRBASE = '../test/home'
 #vctl.TESTING = True
 #vctl.APACHETMPL = '../templates/apache_vhost.tpl'
@@ -45,6 +57,7 @@ def main():
                 f.write(a_conf)
                 print "Конфиг apache сохранен в '%s'." % a_file
             
+            shutil.copy(vctl.NGINXDOCROOT, vctl.NGINXDOCROOT + '.bak')
             with open(vctl.NGINXDOCROOT, 'a') as f:
                 n_conf = ".%s        %s;\n" % (username, siteconfig['docroot'])
                 f.write(n_conf)
