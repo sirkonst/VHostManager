@@ -24,6 +24,15 @@ TESTING = False
 
 class Error(Exception): pass
 
+def get_userpw(username):
+    """ Создает словать {username, uid, gid} для системного пользователя """
+    try:
+        pw = pwd.getpwnam(username)
+    except KeyError:
+        raise Error, "Системный пользователь '%s' не найден" % username
+    
+    return {'username': username, 'uid': pw[2], 'gid': pw[3]}
+
 def createnewuser(username):
     """ Создание базового пользователя для сайта.
     Возвращает словать {username, uid, gid, homedir}
@@ -40,12 +49,6 @@ def createnewuser(username):
     TESTING or os.chown(os.path.join(userhome, 'sites'), pw[2], pw[3])
 
     return {'username': username, 'uid': pw[2], 'gid': pw[3], 'homedir': userhome}
-
-def get_userpw(username):
-    """ Создает словать {username, uid, gid} для системного пользователя """
-    pw = pwd.getpwnam(username)
-    
-    return {'username': username, 'uid': pw[2], 'gid': pw[3]}
 
 def createftpuser(userpw, dir):
     """ Создает аккаунт для ftp
