@@ -65,6 +65,7 @@ def main():
             
         except vctl.Error, x:
             print "Ошибка: %s" % x
+            exit(1)
     else:
         print "Ошибка: не правильной имя сайта."
         exit(1)

@@ -64,6 +64,8 @@ def addnewsite(username, sitename):
     sitedir = os.path.join(sitesdir, sitename)
     if not os.path.isdir(sitesdir):
         raise Error, "Папка для сайтов '%s' не существует" % sitesdir
+    if os.path.exists(sitedir):
+        raise Error, "Папка сайта '%s' уже существует" % sitedir
     
     TESTING or os.mkdir(sitedir)
     pw = TESTING or pwd.getpwnam(username)
