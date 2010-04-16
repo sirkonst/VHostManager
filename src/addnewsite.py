@@ -17,12 +17,12 @@ import vctl
 ################ Переменные ################
 
 # Testing
-vctl.USERDIRBASE = '../test/home'
-vctl.TESTING = True
-vctl.APACHETMPL = '../templates/apache_vhost.tpl'
-vctl.APACHEVHOSTS = '../test/apache_vhost'
-vctl.NGINXDOCROOT = '../test/docroot.map'
-vctl.FTPPASSDB = '../test/ftp.passwd'
+#vctl.USERDIRBASE = '../test/home'
+#vctl.TESTING = True
+#vctl.APACHETMPL = '../templates/apache_vhost.tpl'
+#vctl.APACHEVHOSTS = '../test/apache_vhost'
+#vctl.NGINXDOCROOT = '../test/docroot.map'
+#vctl.FTPPASSDB = '../test/ftp.passwd'
 
 ################ Логика ################
 
