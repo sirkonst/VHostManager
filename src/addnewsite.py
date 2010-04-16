@@ -28,9 +28,12 @@ def main():
             sitename = 'www.%s' % username
             
             userpw = vctl.createnewuser(username)
+            print "Создан системный пользователь %(username)s uid=%(uid)i gid=%(gid)i homedir=%(homedir)s" % userpw
             vctl.createftpuser(userpw, userpw['homedir'])
+            print "Добавлен FTP доступ пользователю %(username)s к папке %(username)s" % userpw
             
             siteconfig = vctl.addnewsite(username, sitename)
+            print "Создан новый сайт %(sitename)s в папке %(docroot)s" % siteconfig
             
             siteconfig['site_aliases'] = '%s *.%s' % (username, username)
             siteconfig['maxclients'] = 5

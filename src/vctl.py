@@ -38,7 +38,7 @@ def createnewuser(username):
     TESTING or sh("setfacl -m -u:nginx:x %s" % userhome)
     os.mkdir( os.path.join(userhome, 'sites') )
     TESTING or os.chown(os.path.join(userhome, 'sites'), pw[2], pw[3])
-    
+
     return {'username': username, 'uid': pw[2], 'gid': pw[3], 'homedir': userhome}
 
 def createftpuser(userpw, dir):
