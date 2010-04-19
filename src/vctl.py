@@ -16,7 +16,7 @@ APACHETMPL = '/etc/apache2/vhosts.d/site-template'
 APACHEVHOSTS = '/etc/apache2/vhosts.d/'
 NGINXDOCROOT = '/etc/nginx/docroot.map'
 FTPPASSDB = '/etc/proftpd/accounts/ftp.passwd'
-
+SFTPUSERDIR = '/etc/proftpd/accounts/sftp/users/'
 
 TESTING = False
 
@@ -60,6 +60,10 @@ def createftpuser(userpw, dir):
         ftp_conf = '%(username)s:!:%(uid)i:%(gid)i::%(dir)s:/bin/false\n' % userpw
         f.write(ftp_conf)
     
+    sftpfile = os.path.join(SFTPUSERDIR, userpw['username'])    
+    if os.path.isdir(SFTPUSERDIR) and not os.path.exists(sftpfile):
+        open(sftpfile, 'w').close()
+
 
 def addnewsite(username, sitename):
     """ Создание папки сайта. Возвращает в словаре параменты сайта: {docroot, sitename, username} """

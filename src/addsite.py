@@ -36,7 +36,7 @@ def main():
             print "Создан сайт %(sitename)s в папке %(docroot)s" % site
             
             vctl.createftpuser(userpw, site['docroot'])
-            print "Добавлен FTP доступ пользователю %s (%s) к папке %s" % (userpw['username'], username, site['docroot'])
+            print "Добавлен FTP доступ пользователю %s (реал. %s) к папке %s" % (userpw['username'], username, site['docroot'])
             
             site['maxclients'] = 5
             site['site_aliases'] = sitename
